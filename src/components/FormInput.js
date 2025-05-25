@@ -1,22 +1,25 @@
 import React, { useState } from 'react'
-import { Row, Form, Button, Col } from 'react-bootstrap';
-import { question } from '../data'
+import { Row, Form, Col } from 'react-bootstrap' // Removed unused Button import
+
 const FormInput = ({ onAdd, notify }) => {
     const [qu, setQu] = useState('')
     const [an, setAn] = useState('')
 
-    //to push data to array
     const addNewItem = () => {
-        if (qu === "" || an === "") {
-            notify("من فضلك اكمل البيانات", "Error");
-            return;
+        if (qu.trim() === "" || an.trim() === "") {
+            notify("من فضلك اكمل البيانات", "Error")
+            return
         }
-        question.push({ id: Math.random(), q: qu, a: an });
+
+        const newQuestion = {
+            id: Math.random(),
+            q: qu.trim(),
+            a: an.trim()
+        }
+
+        onAdd(newQuestion) // Pass the new question to parent component
         setQu('')
         setAn('')
-        onAdd();
-
-        console.log(question)
     }
     return (
         <Row className="my-3">
